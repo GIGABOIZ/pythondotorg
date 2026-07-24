@@ -31,15 +31,10 @@
     {% stylesheet 'style' %}
     {% stylesheet 'mq' %}
     {% stylesheet 'font-awesome' %}
-    {% comment %}
-    {# equivalent to: #}
-    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/style.css" title="default">
-    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/mq.css" media="not print, speech">
-    {% endcomment %}
 
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
-    {# Place icon files in the root if possible (let browsers look for them where they expect them to be) #}
+    {# Favicon & Apple Touch Icons #}
     <link rel="icon" type="image/x-icon" href="{{ STATIC_URL }}favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ STATIC_URL }}apple-touch-icon-144x144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}apple-touch-icon-114x114-precomposed.png">
@@ -47,67 +42,34 @@
     <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}apple-touch-icon-precomposed.png">
     <link rel="apple-touch-icon" href="{{ STATIC_URL }}apple-touch-icon-precomposed.png">
 
-    {# Tile icon for Win8 (144x144 + tile color) #}
-    <meta name="msapplication-TileImage" content="{{ STATIC_URL }}metro-icon-144x144.png"><!-- white shape -->
-    <meta name="msapplication-TileColor" content="#3673a5"><!-- python blue -->
-    <meta name="msapplication-navbutton-color" content="#3673a5">
+    {# Tile Icon for Win8 #}
+    <meta name="msapplication-TileImage" content="{{ STATIC_URL }}metro-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#050509">
+    <meta name="msapplication-navbutton-color" content="#050509">
 
     <title>{% block page_title %}Welcome to {{ SITE_INFO.site_name }}{% endblock %}</title>
 
     <meta name="description" content="{% block page-descript %}{{ SITE_INFO.site_descript }}{% endblock %}">
     <meta name="keywords" content="{% block page-keywords %}Python programming language object oriented web free open source software license documentation download community{% endblock %}">
 
-    {# SEO and OpenGraph data - Needs to be fed dynamically according to the content of the page #}
+    {# SEO and OpenGraph #}
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ SITE_INFO.site_name }}">
     <meta property="og:title" content="{% block og_title %}Welcome to {{ SITE_INFO.site_name }}{% endblock %}">
     <meta property="og:description" content="{% block og-descript %}{{ SITE_INFO.site_descript }}{% endblock %}">
-    {# a path to an image used on the page. helpful for telling crawlers what image to use for a page preview. #}
     <meta property="og:image" content="{{ GET_HOST_WITH_SCHEME }}{{ STATIC_URL }}opengraph-icon-200x200.png">
     <meta property="og:image:secure_url" content="{{ GET_HOST_WITH_SCHEME }}{{ STATIC_URL }}opengraph-icon-200x200.png">
-    {# permalink to the current page #}
     <meta property="og:url" content="{% block og-url %}{{ request.build_absolute_uri }}{% endblock %}">
 
     <link rel="author" href="/humans.txt">
 
-    <link rel="alternate" type="application/rss+xml" title="Python Enhancement Proposals"
-          href="https://peps.python.org/peps.rss">
-    <link rel="alternate" type="application/rss+xml" title="Python Job Opportunities"
-          href="https://www.python.org/jobs/feed/rss/">
-    <link rel="alternate" type="application/rss+xml" title="Python Software Foundation News"
-          href="https://pyfound.blogspot.com/feeds/posts/default?alt=rss">
-    <link rel="alternate" type="application/rss+xml" title="Python Insider"
-          href="https://blog.python.org/feeds/posts/default?alt=rss">
-   <link rel="alternate" type="application/rss+xml" title="Python Releases"
-         href="https://www.python.org/downloads/feed.rss">
+    <link rel="alternate" type="application/rss+xml" title="Python Enhancement Proposals" href="https://peps.python.org/peps.rss">
+    <link rel="alternate" type="application/rss+xml" title="Python Job Opportunities" href="https://www.python.org/jobs/feed/rss/">
+    <link rel="alternate" type="application/rss+xml" title="Python Software Foundation News" href="https://pyfound.blogspot.com/feeds/posts/default?alt=rss">
+    <link rel="alternate" type="application/rss+xml" title="Python Insider" href="https://blog.python.org/feeds/posts/default?alt=rss">
+    <link rel="alternate" type="application/rss+xml" title="Python Releases" href="https://www.python.org/downloads/feed.rss">
 
-    {% comment %} No support for these yet...
-
-    <link rel="sitemap" type="application/xml" title="{{ SITE_INFO.site_name }} Sitemap" href="/sitemap.xml">
-
-    <link rel="search" type="application/opensearchdescription+xml" title="Search under the www.python.org Domain" href="/search-pysite.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search within the Python Wiki" href="/search-pywiki.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search within Python Books at Google Book Search" href="/search-pybooks.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search within the Python Documentation" href="/search-pydocs.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search for a Module in the Standard Library" href="/search-pymodules.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search for Packages inside the Cheeseshop (PyPI)" href="/search-pycheese.xml">
-    <link rel="search" type="application/opensearchdescription+xml" title="Search Archives of the Main Python Mailing List" href="/search-pythonlist.xml">
-
-     * Need to support Twitter cards? Info about that here:
-     * https://github.com/h5bp/html5-boilerplate/blob/master/doc/extend.md#twitter-cards
-     *
-     * Hey everybody, there is a shortlink version of this page!
-     * <link rel="shortlink" href="">
-     *
-     * Have a web app? Unobtrusively tell users where to get it:
-     * <meta name="apple-itunes-app" content="app-id=APP_ID,app-argument=SOME_TEXT">
-     *
-     * Support "page flipping" in modern browsers, where applicable (nt all pages would have a prev/next relationship)
-     * <link rel="next" href="/next"/>
-     * <link rel="prev" href="/prev"/>
-    {% endcomment %}
-
-    {# Site link search #}
+    {# Schema.org Structured Data #}
     <script type="application/ld+json">
      {
        "@context": "https://schema.org",
@@ -124,25 +86,23 @@
     {% block head %}{% endblock %}
 </head>
 
-<body {% block body_attributes %}{% endblock %}>
+<body {% block body_attributes %}{% endblock %} class="aaa-theme">
 
     <div id="touchnav-wrapper">
 
         <div id="nojs" class="do-not-print">
-            <p><strong>Notice:</strong> This page displays a fallback because interactive scripts did not run. Possible causes include disabled JavaScript or failure to load scripts or stylesheets.</p>
+            <p><strong>Notice:</strong> This page displays a fallback because interactive scripts did not run.</p>
         </div>
 
-        <!-- Sister Site Links -->
+        <!-- Top Meta Navigation Bar -->
         <div id="top" class="top-bar do-not-print">
 
             <nav class="meta-navigation container">
 
-                {# Allow Screen readers (hidden for all others) to skip the navigation and get to the main content #}
                 <div class="skip-link screen-reader-text">
                     <a href="#content" title="Skip to content">Skip to content</a>
                 </div>
 
-                {# Fallback for browsers that do not display generated content... HTML entity will be the icon instead #}
                 <a id="close-python-network" class="jump-link" href="#python-network" aria-hidden="true">
                     <span aria-hidden="true" class="icon-arrow-down"><span>&#9660;</span></span> Close
                 </a>
@@ -157,7 +117,7 @@
 
         </div>
 
-        <!-- Header elements -->
+        <!-- AAA Header Elements -->
         <header class="main-header">
             <div class="container">
 
@@ -168,32 +128,35 @@
                 <div class="options-bar-container do-not-print">
                     <a href="https://donate.python.org/" class="donate-button">Donate</a>
                     <div class="options-bar">
-                        {# Its a little ugly, but no space between elements makes the inline-block style work better #}
-                        <a id="site-map-link" class="jump-to-menu" href="#site-map"><span class="menu-icon">&equiv;</span> Menu</a><form class="search-the-site" action="/search/" method="get">
+                        <a id="site-map-link" class="jump-to-menu" href="#site-map"><span class="menu-icon">&equiv;</span> Menu</a>
+                        
+                        <form class="search-the-site" action="/search/" method="get">
                             <fieldset title="Search Python.org">
-
                                 <span aria-hidden="true" class="icon-search"></span>
-
                                 <label class="screen-reader-text" for="id-search-field">Search This Site</label>
-                                <input id="id-search-field" name="q" type="search" class="search-field" placeholder="Search" value="{{ request.GET.q }}" tabindex="1">
-
-                                <button type="submit" name="submit" id="submit" class="search-button" title="Submit this Search" tabindex="3">
+                                <input id="id-search-field" name="q" type="search" class="search-field" placeholder="Search Python Docs & Resources..." value="{{ request.GET.q }}" tabindex="1">
+                                <button type="submit" name="submit" id="submit" class="search-button" title="Submit Search" tabindex="3">
                                     GO
                                 </button>
-
                             </fieldset>
-                        </form><span class="breaker"></span><div class="adjust-font-size" aria-hidden="true">
+                        </form>
+                        
+                        <span class="breaker"></span>
+                        
+                        <div class="adjust-font-size" aria-hidden="true">
                             <ul class="navigation menu" aria-label="Adjust Text Size on Page">
                                 <li class="tier-1 last" aria-haspopup="true">
                                     <a href="#" class="action-trigger"><strong><small>A</small> A</strong></a>
                                     <ul class="subnav menu" role="menu">
                                         <li class="tier-2 element-1" role="menuitem"><a class="text-shrink" title="Make Text Smaller" href="javascript:;">Smaller</a></li>
                                         <li class="tier-2 element-2" role="menuitem"><a class="text-grow" title="Make Text Larger" href="javascript:;">Larger</a></li>
-                                        <li class="tier-2 element-3" role="menuitem"><a class="text-reset" title="Reset any font size changes I have made" href="javascript:;">Reset</a></li>
+                                        <li class="tier-2 element-3" role="menuitem"><a class="text-reset" title="Reset Font Size" href="javascript:;">Reset</a></li>
                                     </ul>
                                 </li>
                             </ul>
-                        </div><div class="winkwink-nudgenudge">
+                        </div>
+                        
+                        <div class="winkwink-nudgenudge">
                             <ul class="navigation menu" aria-label="Social Media Navigation">
                                 <li class="tier-1 last" aria-haspopup="true">
                                     <a href="#" class="action-trigger">Socialize</a>
@@ -216,25 +179,22 @@
                     {% endblock main_navigation %}
                 </nav>
 
-                <div class="header-banner {% block header-banner_attributes %}{% endblock %}"> <!-- for optional "do-not-print" class -->
-                    {% block header_content %}
-                    {% endblock %}
+                <div class="header-banner {% block header-banner_attributes %}{% endblock %}">
+                    {% block header_content %}{% endblock %}
                 </div>
 
-                {% block intro_copy %}
-                {% endblock %}
+                {% block intro_copy %}{% endblock %}
 
              </div><!-- end .container -->
         </header>
 
+        <!-- Main Content Area -->
         <div id="content" class="content-wrapper">
-            <!-- Main Content Column -->
             <div class="container">
 
                 <section class="main-content {% block content_attributes %}{% endblock %}" role="main">
 
-                    {% block breadcrumbs %}
-                    {% endblock breadcrumbs %}
+                    {% block breadcrumbs %}{% endblock breadcrumbs %}
 
                     {% if messages %}
                         {% for message in messages %}
@@ -244,22 +204,17 @@
                         {% endfor %}
                     {% endif %}
 
-                    {% block content %}
-                    {% endblock content %}
+                    {% block content %}{% endblock content %}
 
                 </section>
 
-                {% block left_sidebar %}
-                {% endblock left_sidebar %}
-
-                {% block right_sidebar %}
-                {% endblock right_sidebar %}
-
+                {% block left_sidebar %}{% endblock left_sidebar %}
+                {% block right_sidebar %}{% endblock right_sidebar %}
 
             </div><!-- end .container -->
-        </div><!-- end #content .content-wrapper -->
+        </div><!-- end #content -->
 
-        <!-- Footer and social media list -->
+        <!-- Modern AAA Footer with Developer Credits -->
         {% block footer %}
         <footer id="site-map" class="main-footer">
             <div class="main-footer-links">
@@ -273,12 +228,11 @@
                     <a id="back-to-top-2" class="jump-link" href="#python-network"><span aria-hidden="true" class="icon-arrow-up"><span>&#9650;</span></span> Back to Top</a>
                     {% endblock footer_sitemap %}
 
-                </div><!-- end .container -->
-            </div> <!-- end .main-footer-links -->
+                </div>
+            </div>
 
             <div class="site-base">
                 <div class="container">
-                    {# These need to be hooked up to a URL and page content at some point #}
                     <ul class="footer-links navigation menu do-not-print" role="tree">
                         <li class="tier-1 element-1"><a href="/about/help/">Help &amp; <span class="say-no-more">General</span> Contact</a></li>
                         <li class="tier-1 element-2"><a href="/community/diversity/">Diversity <span class="say-no-more">Initiatives</span></a></li>
@@ -294,12 +248,12 @@
                             &nbsp;<span class="pre"><a href="/psf-landing/">Python Software Foundation</a></span>
                             &nbsp;<span class="pre"><a href="/about/legal/">Legal Statements</a></span>
                             &nbsp;<span class="pre"><a href="https://policies.python.org/python.org/Privacy-Notice/">Privacy Notice</a></span>
-                            <!--&nbsp;<span class="pre"><a href="/psf/community-infrastructure">Powered by PSF Community Infrastructure</a></span>-->
+                            &nbsp;|&nbsp;<span class="pre" style="color: #00f2fe; font-weight: bold;">Redesigned by <a href="#" style="color: #ff0055; text-decoration: none;">GIGABOIZ</a></span>
                         </small></p>
                     </div>
 
-                </div><!-- end .container -->
-            </div><!-- end .site-base -->
+                </div>
+            </div>
 
         </footer>
         {% endblock %}
@@ -316,16 +270,9 @@
     <script src="{{ STATIC_URL }}js/libs/html-includes.js"></script>
 
     {% javascript 'main' %}
-    {% comment %}
-    {# equivalent to: #}
-    <script src="{{ STATIC_URL }}js/plugins.js"></script>
-    <script src="{{ STATIC_URL }}js/script.js"></script>
-    {% endcomment %}
-
     {% endblock javascript %}
 
-    {% block extra_js %}
-    {% endblock extra_js %}
+    {% block extra_js %}{% endblock extra_js %}
 
 </body>
 </html>
